@@ -33,7 +33,7 @@ class App extends Component {
       return (
         <div key={key}>
           <h2>{post.title}</h2>
-          <p>{renderHTML(post.body)}</p>
+          <p>{post.body}</p>
         </div>
       );
     });
@@ -45,14 +45,14 @@ class App extends Component {
     
   }
   onHandleSubmit(e) {
-    // Upis u firebase postavljamo podatke koje zelimo da upisemo 
+                   { /* Upis u firebase postavljamo podatke koje zelimo da upisemo u ovom slucaju su title, body*/}
     e.preventDefault();
     const post = {
       title: this.state.title,
       body: this.state.body
     };
     database.push(post);
-    this.setState({  //brisanje vrednosti iz imputa nakon unosa
+  this.setState({  {/*brisanje vrednosti iz imputa nakon unosa (refresh)*/}
       title: '',
       body: ''
 
@@ -64,7 +64,8 @@ class App extends Component {
       <div className="container">
         <form onSubmit={this.onHandleSubmit} >{/* form onSubmit = this. pa nnasa xxmetodaaz!!!*/}
           <div className="form-group">
-            <input value={this.state.title} // moramo definisati value da bi mogli brisati string iz imputa
+            <input value={this.state.title} {/*moramo definisati value da bi mogli brisati string iz imputa*/}
+            
               type="text"
                name="title" 
                placeholder="Title"
@@ -77,7 +78,7 @@ class App extends Component {
             <ReactQuill
             modules={App.modules}
             formats={App.modules}
-             value={this.state.body} // moramo definisati value da bi mogli brisati string iz imputa             
+            value={this.state.body} {/*moramo definisati value da bi mogli brisati string iz imputa*/}
                placeholder="Body"
                 onChange={this.onHandleChange} 
                  />
