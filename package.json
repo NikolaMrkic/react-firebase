@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.0.4",
+    "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.0",
@@ -14,5 +15,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@types/lodash": "^4.14.109",
+    "babel-plugin-lodash": "^3.3.4"
   }
 }
