@@ -24,7 +24,7 @@ class App extends Component {
       });
     });
   }
-  //prikazivanje podataka iz firebase
+  // prikazivanje podataka iz firebase
   renderPosts() {
     return _.map(this.state.posts, (post, key) => {
       return (
