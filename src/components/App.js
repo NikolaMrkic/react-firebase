@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { database } from '../firebase'; // mora se importovati da bi pristupili fajlu firebase.js
 import _ from 'lodash';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import renderHTML from 'react-render-html';
 
 class App extends Component {
   constructor(props) {
@@ -11,8 +14,8 @@ class App extends Component {
       posts: {}
     };
 
-    //vezivanje
-    this.onInputChange = this.onInputChange.bind(this);
+    // vezivanje
+    this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleSubmit = this.onHandleSubmit.bind(this);
   }
 
@@ -30,19 +33,19 @@ class App extends Component {
       return (
         <div key={key}>
           <h2>{post.title}</h2>
-          <p>{post.body}</p>
+          <p>{renderHTML(post.body)}</p>
         </div>
       );
     });
   }
 
-  onInputChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+  onHandleChange(e) {
+    this.setState({ body: e});
+    console.log(this.state.body);
+    
   }
   onHandleSubmit(e) {
-    //Upis u firebase postavljamo podatke koje zelimo da upisemo 
+    // Upis u firebase postavljamo podatke koje zelimo da upisemo 
     e.preventDefault();
     const post = {
       title: this.state.title,
@@ -62,11 +65,22 @@ class App extends Component {
         <form onSubmit={this.onHandleSubmit} >{/* form onSubmit = this. pa nnasa xxmetodaaz!!!*/}
           <div className="form-group">
             <input value={this.state.title} // moramo definisati value da bi mogli brisati string iz imputa
-              type="text" name="title" placeholder="Title" onChange={this.onInputChange} ref="title" className="form-control" />
+              type="text"
+               name="title" 
+               placeholder="Title"
+                onChange={e => {this.setState({ title: e.target.value});
+              }} 
+                ref="title"
+                 className="form-control" />
           </div>
           <div className="form-group">
-            <input value={this.state.body} // moramo definisati value da bi mogli brisati string iz imputa 
-              type="text" name="body" placeholder="Body" onChange={this.onInputChange} ref="body" className="form-control" />
+            <ReactQuill
+            modules={App.modules}
+            formats={App.modules}
+             value={this.state.body} // moramo definisati value da bi mogli brisati string iz imputa             
+               placeholder="Body"
+                onChange={this.onHandleChange} 
+                 />
           </div>
           <button className="btn btn-primary">Post</button>
         </form>
@@ -77,6 +91,34 @@ class App extends Component {
   }
 }
 
+App.modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['link', 'image', 'video'],
+    ['clean'],
+    ['code-block']
+  ]
+};
+
+App.formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'link',
+  'image',
+  'video',
+  'code-block'
+];
 
 
 
